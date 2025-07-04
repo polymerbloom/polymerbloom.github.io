@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Polymer Bloom</title>
+    <link href="styles.css" rel="stylesheet"/>
+    <style>
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .product-card {
+        opacity: 0; /* Hidden by default */
+      } 
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background-color: #fdf8f4;
+      padding: 20px 40px;
+      border-bottom: 1px solid #e4ddd6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    #logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    #title {
+      margin-left: 10px;
+      font-size: 1.5rem;
+    }
+
+    #home {
+      text-decoration: none;
+      color: black;
+    }
+
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #a6948f;
+    }
+
+    #products-title {
+      text-align: center;
+      margin-top: 120px; /* adjust based on header height */
+      padding-left: 2rem;
+    }
+
+
+    .products-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .product-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      padding-top: 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-card h3 {
+      margin: 0.8rem 0 0.4rem;
+    }
+
+    .product-card p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .price {
+      color: #e91e63;
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #e91e63;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .buy-btn:hover {
+      background: #d81b60;
+    }
+
+    .order-form {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #e91e63;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .order-form:hover {
+      background: #d81b60;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; 
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .content {
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px; right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div style="display: flex; align-items: center;">
+        <img id="logo" src="" alt="Logo"/>
+        <h1 id="title"><a id="home" href="index.html">Polymer Bloom</a></h1>
+      </div>
+      <nav>
+        <a href="index.html#about" id="about-link">About</a>
+        <a href="index.html#contact" id="contact-link">Contact</a>
+        <a href="Products.html" id="shopping-link">Shop now</a>
+      </nav>
+    </header>
+    <h2 id="products-title">Our products</h2>
+    <div class="products-container">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Image of Product 1" class="product-image" />
+        <h3 class="product-title">Product 1</h3>
+        <p class="product-description"></p>
+        <div class="product-price">$4.99</div>
+        <a href="javascript:void(0);" class="buy-btn" onclick="openModal('product1')" aria-label="Buy Product 1">Buy Now</a>
+      </div>
+
+      <div id="product1-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('product1')">&times;</span>
+          <img class="content" src="images/product1-large.jpg" alt="Product 1 large">
+          <h2 class="content">Product 1</h2>
+          <p class="content">Detailed description of the product goes here...</p>
+          <ul>
+            <li class="content">Feature 1</li>
+            <li class="content">Feature 2</li>
+          </ul>
+          <a class="order-form contact" href="https://docs.google.com/forms/d/e/1FAIpQLSf4mKi94u7MqRak0HTSbuYoq5mram1MgKW-AzEhDWJQoY3hVg/viewform">Order Here</a>  
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Image of Product 2" class="product-image" />
+        <h3 class="product-title">Product 2</h3>
+        <p class="product-description"></p>
+        <div class="product-price">$1.99</div>
+        <a href="javascript:void(0);" onclick="openModal('product2')" class="buy-btn" aria-label="Buy Product 2">Buy Now</a>
+      </div>
+
+      <div id="product2-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('product2')">&times;</span>
+          <img class="content" src="images/product1-large.jpg" alt="Product 2 large">
+          <h2 class="content">Product Name</h2>
+          <p class="content">Detailed description of the product goes here...</p>
+          <ul>
+            <li class="content">Feature 1</li>
+            <li class="content">Feature 2</li>
+          </ul>
+          <a class="order-form content" href="https://docs.google.com/forms/d/e/1FAIpQLSf4mKi94u7MqRak0HTSbuYoq5mram1MgKW-AzEhDWJQoY3hVg/viewform">Order here</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <img src="https://via.placeholder.com/300x200" alt="Image of Product 3" class="product-image" />
+        <h3 class="product-title">Product 3</h3>
+        <p class="product-description"></p>
+        <div class="product-price">$9.99</div>
+        <a href="javascript:void(0);" class="buy-btn" onclick="openModal('product1')" aria-label="Buy Product 3">Buy Now</a>
+      </div>
+
+      <div id="product3-modal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('product3')">&times;</span>
+          <img src="images/product1-large.jpg" alt="Product 3 large">
+          <h2>Product Name</h2>
+          <p>Detailed description of the product goes here...</p>
+          <ul>
+            <li>Feature 1</li>
+            <li>Feature 2</li>
+          </ul>
+          <a class="order-form" href="https://docs.google.com/forms/d/e/1FAIpQLSf4mKi94u7MqRak0HTSbuYoq5mram1MgKW-AzEhDWJQoY3hVg/viewform">Order here</a>
+        </div>
+      </div>      
+    </div>
+    <script src="productsscript.js"></script>
+  </body>
